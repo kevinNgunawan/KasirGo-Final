@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>KasirGO — Offline</title>
+  <meta name="theme-color" content="#4a90e2" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .offline-card {
+      text-align: center;
+      max-width: 380px;
+      width: 100%;
+    }
+    .offline-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(74,144,226,0.15);
+      border: 2px solid rgba(74,144,226,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 32px;
+    }
+    h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+    p  { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 24px; }
+    .btn-retry {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-retry:hover { opacity: 0.85; }
+    .offline-tip {
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-card">
+    <div class="offline-icon">📡</div>
+    <h1>Tidak Ada Koneksi</h1>
+    <p>KasirGO membutuhkan koneksi internet untuk sinkronisasi data.<br>
+       Periksa koneksi Anda dan coba lagi.</p>
+    <button class="btn-retry" onclick="window.location.reload()">
+      🔄 Coba Lagi
+    </button>
+    <p class="offline-tip">Data yang sudah di-cache tetap bisa diakses secara offline.</p>
+  </div>
+</body>
+</html>

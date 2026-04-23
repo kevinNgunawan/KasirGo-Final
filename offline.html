@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>KasirGO — Offline</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e8f1fc 0%, #f0f7ff 50%, #fefefe 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #1a2332;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 420px;
+      background: white;
+      border-radius: 24px;
+      padding: 48px 36px;
+      box-shadow: 0 20px 60px rgba(74,144,226,.15);
+      border: 1px solid rgba(74,144,226,.1);
+      animation: fadeUp .4s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .icon-wrap {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #4a90e2, #3178c6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 36px;
+      box-shadow: 0 8px 24px rgba(74,144,226,.3);
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #4a90e2;
+      margin-bottom: 6px;
+      letter-spacing: -.3px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #7c8fa6;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .offline-box {
+      background: #f5f7fa;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-left: 4px solid #ff9f43;
+    }
+
+    .offline-box p {
+      font-size: 13px;
+      color: #1a2332;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .offline-box .label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ff9f43;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 4px;
+    }
+
+    .info-list {
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f4f9;
+      font-size: 13px;
+      color: #1a2332;
+    }
+
+    .info-item:last-child { border-bottom: none; }
+
+    .info-item .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot.green  { background: #28c76f; }
+    .dot.orange { background: #ff9f43; }
+    .dot.red    { background: #ea5455; }
+
+    .btn-retry {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 4px 12px rgba(74,144,226,.3);
+      text-decoration: none;
+      margin-bottom: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-retry:hover {
+      background: #3178c6;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(74,144,226,.4);
+    }
+
+    .footer-note {
+      font-size: 11px;
+      color: #a8b9cc;
+      margin-top: 16px;
+    }
+
+    .spinner {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .checking { display: flex; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon-wrap">🏪</div>
+    <h1>KasirGO</h1>
+    <p class="subtitle">Anda sedang offline.<br/>Periksa koneksi internet Anda.</p>
+
+    <div class="offline-box">
+      <div class="label">⚠️ Tidak Ada Koneksi</div>
+      <p>Aplikasi memerlukan internet untuk memuat pertama kali. Setelah terhubung sekali, KasirGO bisa digunakan secara offline.</p>
+    </div>
+
+    <div class="info-list">
+      <div class="info-item">
+        <div class="dot green"></div>
+        <span>Data transaksi & produk tersimpan lokal (localStorage)</span>
+      </div>
+      <div class="info-item">
+        <div class="dot green"></div>
+        <span>Setelah online sekali, aplikasi bisa dipakai offline</span>
+      </div>
+      <div class="info-item">
+        <div class="dot orange"></div>
+        <span>CDN (Bootstrap, Chart.js, dll) butuh internet pertama kali</span>
+      </div>
+      <div class="info-item">
+        <div class="dot red"></div>
+        <span>Cetak struk & export PDF butuh koneksi aktif</span>
+      </div>
+    </div>
+
+    <button class="btn-retry" onclick="retryConnection()">
+      <span class="spinner" id="spinner"></span>
+      <span id="btnText">🔄 Coba Lagi</span>
+    </button>
+
+    <p class="footer-note">KasirGO v1.0 — Aplikasi Kasir Modern PWA</p>
+  </div>
+
+  <script>
+    function retryConnection() {
+      const btn    = document.querySelector('.btn-retry');
+      const spinner = document.getElementById('spinner');
+      const btnText = document.getElementById('btnText');
+
+      spinner.classList.add('checking');
+      btnText.textContent = 'Memeriksa koneksi...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        if (navigator.onLine) {
+          window.location.href = './index.html';
+        } else {
+          spinner.classList.remove('checking');
+          btnText.textContent = '🔄 Coba Lagi';
+          btn.disabled = false;
+          alert('Masih offline. Periksa koneksi WiFi atau data seluler Anda.');
+        }
+      }, 1500);
+    }
+
+    // Auto retry saat online
+    window.addEventListener('online', () => {
+      document.getElementById('btnText').textContent = '✅ Terhubung! Memuat...';
+      setTimeout(() => { window.location.href = './index.html'; }, 800);
+    });
+
+    // Cek koneksi tiap 5 detik
+    setInterval(() => {
+      if (navigator.onLine) {
+        document.getElementById('btnText').textContent = '✅ Terhubung! Klik untuk lanjut';
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
